@@ -1,327 +1,1471 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <!-- Metadatos -->
-    <meta charset="utf-8">
-    <meta name="author" content="Shcy">
-    <meta name="description" content="Portafolio de desarrollo web de Shcy">
-    <meta name="keywords" content="HTML, CSS, JavaScript, React">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Titulo -->
-    <title>Shcy| Desarrollo Web Front-End</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="icono.png">
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <!-- Iconos de Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-    <!-- CSS -->
-    <link href="style.css" rel="stylesheet">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jesús Luna | Blog & Proyectos</title>
+    
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&family=Rubik+Dirt&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <!-- Barra de navegacion -->
-    <nav class="navbar navbar-expand-md navbar-light">
-      <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-toggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbar-toggler">
-          <a class="navbar-brand" href="#">
-            <img src="icono.png" width="50" alt="Logo de la página web">
-          </a>
-          <ul class="navbar-nav d-flex justify-content-center align-items-center">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#sobre-mi">Acerca de</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#proyectos">Proyectos</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#contacto">Contacto</a>
-            </li>
-          </ul>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #050508;
+            --bg-card: rgba(18, 18, 24, 0.72);
+            --bg-hover: rgba(26, 26, 34, 0.85);
+            --border: rgba(255,255,255,0.08);
+            --text-primary: #e8e8e8;
+            --text-secondary: rgba(255,255,255,0.6);
+            --accent: #6d4aff;
+            --accent-glow: rgba(109, 74, 255, 0.3);
+            --terminal-green: #88cc88;
+            --code-bg: rgba(13, 13, 17, 0.85);
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            /* language / planet glow colors */
+            --c-vscode: #3b82f6;
+            --c-git: #f05033;
+            --c-node: #83cd29;
+            --c-python: #ffd43b;
+            --c-rust: #e2793a;
+            --c-ubuntu: #e95420;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { background: var(--bg-dark); }
+
+        body {
+            font-family: var(--font-display);
+            background-color: transparent;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+            position: relative;
+        }
+
+        /* ============ UNIVERSE / STARFIELD BACKGROUND ============ */
+        #stars-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background:
+                radial-gradient(ellipse at 15% 10%, rgba(109, 74, 255, 0.16) 0%, transparent 45%),
+                radial-gradient(ellipse at 85% 25%, rgba(46, 196, 182, 0.10) 0%, transparent 40%),
+                radial-gradient(ellipse at 50% 90%, rgba(224, 121, 58, 0.08) 0%, transparent 45%),
+                var(--bg-dark);
+        }
+
+        .shooting-star {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 2px;
+            height: 2px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px 1px #fff, 0 0 0 1px rgba(255,255,255,0.1);
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        @keyframes shoot {
+            0% { transform: translate(0, 0) scale(0.4); opacity: 0; }
+            8% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translate(var(--sx), var(--sy)) scale(1); opacity: 0; }
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg-dark); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+        /* ============ NAVBAR ============ */
+        .navbar-custom {
+            background: rgba(10, 10, 10, 0.92) !important;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            transition: all 0.4s ease;
+        }
+
+        .navbar-custom.scrolled {
+            padding: 0.6rem 0;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar-brand-custom {
+            font-family: var(--font-mono);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary) !important;
+            letter-spacing: 1px;
+        }
+
+        .navbar-brand-custom .cursor {
+            color: var(--accent);
+            animation: blink-cursor 1s infinite;
+        }
+
+        @keyframes blink-cursor {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+
+        .nav-link-custom {
+            color: var(--text-secondary) !important;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 500;
+            margin: 0 0.3rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link-custom:hover {
+            color: var(--text-primary) !important;
+        }
+
+        .nav-link-custom::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--accent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-link-custom:hover::after {
+            transform: scaleX(1);
+        }
+
+        .navbar-toggler {
+            border-color: var(--border);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1) opacity(0.7);
+        }
+
+        /* ============ HERO ============ */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(109, 74, 255, 0.12) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(109, 74, 255, 0.08) 0%, transparent 50%);
+            animation: hero-glow 10s ease-in-out infinite;
+        }
+
+        @keyframes hero-glow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(109, 74, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(109, 74, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
+        }
+
+        .hero-greeting {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-greeting::before {
+            content: '$ ';
+            color: var(--text-secondary);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent) 0%, #9d8cff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-tagline {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary-custom {
+            background: var(--accent);
+            color: white;
+            padding: 0.9rem 2.5rem;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background: #5a3aff;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .btn-outline-custom {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 0.9rem 2.5rem;
+            border: 1px solid var(--border);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-custom:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            animation: bounce-down 2s infinite;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        @keyframes bounce-down {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-15px); }
+            60% { transform: translateX(-50%) translateY(-7px); }
+        }
+
+        /* ============ SECTIONS ============ */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .section-tag::before {
+            content: '// ';
+            color: var(--text-secondary);
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 1rem;
+        }
+
+        /* ============ ABOUT ============ */
+        .about {
+            background: var(--bg-card);
+        }
+
+        .about-terminal {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            background: var(--bg-hover);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-dot.red { background: #ff5f57; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #28ca42; }
+
+        .terminal-title {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+            font-family: var(--font-mono);
+        }
+
+        .terminal-body {
+            padding: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            line-height: 1.9;
+        }
+
+        .terminal-line {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .terminal-line .comment { color: #5a5a5a; }
+        .terminal-line .keyword { color: var(--accent); }
+        .terminal-line .string { color: var(--terminal-green); }
+        .terminal-line .emoji { font-family: var(--font-display); }
+
+        .about-text {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.9;
+        }
+
+        .about-text strong {
+            color: var(--text-primary);
+        }
+
+        .about-text .accent {
+            color: var(--accent);
+        }
+
+        /* ============ TIMELINE ============ */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(var(--accent), transparent);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 50%;
+            padding: 0 3rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border: 3px solid var(--bg-dark);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -8px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -8px;
+        }
+
+        .timeline-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(109, 74, 255, 0.3);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .timeline-year {
+            font-family: var(--font-mono);
+            color: var(--accent);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .timeline-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .timeline-feature {
+            display: inline-block;
+            background: var(--bg-hover);
+            color: var(--terminal-green);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            margin: 0.3rem 0.3rem 0 0;
+        }
+
+        /* ============ STACK — UNIVERSO DE LENGUAJES ============ */
+        .stack-section {
+            background:
+                radial-gradient(ellipse at 50% 0%, rgba(109, 74, 255, 0.14) 0%, transparent 55%),
+                var(--bg-card);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stack-orbit-field {
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(rgba(255,255,255,0.35) 1px, transparent 1.4px);
+            background-size: 90px 90px;
+            opacity: 0.25;
+            pointer-events: none;
+        }
+
+        .stack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .stack-item {
+            background: rgba(10, 10, 14, 0.55);
+            backdrop-filter: blur(6px);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+            position: relative;
+            overflow: hidden;
+            animation: planet-float 6s ease-in-out infinite;
+        }
+
+        .stack-item:nth-child(1) { --glow: var(--c-vscode);  animation-delay: 0s; }
+        .stack-item:nth-child(2) { --glow: var(--c-git);     animation-delay: .4s; }
+        .stack-item:nth-child(3) { --glow: var(--c-node);    animation-delay: .8s; }
+        .stack-item:nth-child(4) { --glow: var(--c-python);  animation-delay: 1.2s; }
+        .stack-item:nth-child(5) { --glow: var(--c-rust);    animation-delay: 1.6s; }
+        .stack-item:nth-child(6) { --glow: var(--c-ubuntu);  animation-delay: 2s; }
+
+        @keyframes planet-float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .stack-item::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            left: 50%;
+            width: 140%;
+            height: 140%;
+            transform: translateX(-50%);
+            background: radial-gradient(circle, var(--glow, var(--accent)) 0%, transparent 60%);
+            opacity: 0.14;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .stack-item:hover {
+            transform: translateY(-10px) scale(1.03);
+            border-color: var(--glow, var(--accent));
+            box-shadow: 0 20px 45px rgba(0,0,0,0.5), 0 0 30px -8px var(--glow, var(--accent-glow));
+        }
+
+        .stack-item:hover::before {
+            opacity: 0.28;
+        }
+
+        .stack-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+            filter: drop-shadow(0 0 10px var(--glow, transparent));
+            position: relative;
+            z-index: 1;
+        }
+
+        .stack-item h5 {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stack-item p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .stack-item { animation: none; }
+        }
+
+        /* ============ PROJECTS ============ */
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(109, 74, 255, 0.3);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .project-banner {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-banner.xoloai {
+            background: linear-gradient(135deg, #6d4aff 0%, #2a1a6a 100%);
+        }
+
+        .project-banner.zyntech {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);
+        }
+
+        .project-banner-icon {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.9);
+            z-index: 2;
+        }
+
+        .project-banner::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .project-body {
+            padding: 2rem;
+        }
+
+        .project-badge {
+            display: inline-block;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent);
+            background: rgba(109, 74, 255, 0.1);
+            border: 1px solid rgba(109, 74, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .project-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            font-family: var(--font-mono);
+            transition: gap 0.3s ease;
+        }
+
+        .project-link:hover {
+            gap: 1rem;
+            color: #9d8cff;
+        }
+
+        /* ============ BLOG POST ============ */
+        .blog-section {
+            background: var(--bg-card);
+        }
+
+        .blog-post {
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .blog-date {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent);
+        }
+
+        .blog-tag {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: var(--bg-hover);
+            padding: 0.3rem 0.8rem;
+            border-radius: 6px;
+        }
+
+        .blog-post h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .blog-post p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            margin: 2rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            line-height: 2;
+            overflow-x: auto;
+        }
+
+        .blog-code-block .comment { color: #5a5a5a; }
+        .blog-code-block .cmd { color: var(--accent); }
+        .blog-code-block .flag { color: var(--terminal-green); }
+        .blog-code-block .note { color: #666; font-style: italic; }
+
+        .blog-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .blog-list li {
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .blog-list li::before {
+            content: '✓';
+            color: var(--terminal-green);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        /* ============ DATE BANNER ============ */
+        .date-banner {
+            background: linear-gradient(135deg, var(--accent) 0%, #4a2eff 100%);
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .date-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        .date-banner-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .date-banner h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .date-banner .date {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 2px;
+        }
+
+        /* ============ CONTACT ============ */
+        .contact-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-card {
+            background: rgba(12, 12, 16, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3.5rem 2.5rem;
+            max-width: 720px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            inset: -1px;
+            border-radius: 20px;
+            padding: 1px;
+            background: linear-gradient(135deg, rgba(109,74,255,0.5), transparent 40%, transparent 60%, rgba(46,196,182,0.4));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .contact-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-primary);
+        }
+
+        .contact-card > p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .contact-email-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.9rem 1.4rem;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--terminal-green);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .copy-email-btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 0.9rem;
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .copy-email-btn:hover { background: #5a3aff; transform: translateY(-2px); }
+        .copy-email-btn.copied { background: var(--terminal-green); color: #0a0a0a; }
+
+        .contact-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        /* ============ FOOTER ============ */
+        .footer {
+            background: var(--bg-dark);
+            border-top: 1px solid var(--border);
+            padding: 60px 0 30px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-family: var(--font-mono);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-logo .accent {
+            color: var(--accent);
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .footer-social a {
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 50%;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-social a:hover {
+            border-color: var(--accent);
+            background: var(--accent);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .footer-copy {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+            font-family: var(--font-mono);
+        }
+
+        /* ============ RESPONSIVE ============ */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                left: 0 !important;
+                text-align: left !important;
+                padding-left: 3rem;
+                padding-right: 0;
+            }
+
+            .timeline-item:nth-child(odd) .timeline-dot,
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 12px;
+                right: auto;
+            }
+
+            .blog-post {
+                padding: 2rem;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+                padding: 0 2rem;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- ===== NAVBAR ===== -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand-custom" href="#hero">
+                jesus_luna<span class="cursor">|</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="#about">Sobre mí</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="#journey">Mi Viaje</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="#stack">Stack</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="#projects">Proyectos</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="#blog">Blog</a></li>
+                    <li class="nav-item"><a class="nav-link nav-link-custom" href="#contact">Contacto</a></li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
 
-    <!-- Seccion Hero -->
-    <section class="hero align-items-stretch">
-      <div class="hero-principal d-flex flex-column justify-content-center align-items-center">
-        <img class="hero-imagen-desarrollador rounded-circle" src="icono.png" alt="Foto de schy">
-        <h1>Bienvenidos a SHCY Software ("BETA")</h1>
-        <h2>Desarrollo sitios web y escribo artículos sobre programación.</h2>
-      </div>
-      <div class="hero-inferior">
-        <img class="hero-inferior-imagen img-fluid" src="hero-inferior.svg" alt="Monitor, laptop y logos de HTML, CSS, JavaScript y React.">
-      </div>
-    </section>
-
-    <!-- Sobre mi -->
-    <section id="sobre-mi" class="sobre-mi seccion-oscura">
-      <div class="contenedor">
-        <h2 class="seccion-titulo">Conoce a Shcy Software</h2>
-        <p class="seccion-texto">Soy un desarrollador web con experiencia en HTML, CSS y JavaScript. Me apasiona crear sitios web interactivos y fáciles de usar que brinden una excelente experiencia de usuario.</p>
-      </div>
-    </section>
-
-    <!-- Experiencia -->
-    <section class="experiencia seccion-clara">
-      <div class="container text-center">
-        <div class="row">
-          <!-- Desarrollo Web -->
-          <div class="columna col-12 col-md-4">
-            <i class="bi bi-laptop"></i>
-            <p class="experiencia-titulo">Desarrollo Web</p>
-            <p>El diseño del sitio web será minimalista y moderno, con una paleta de colores simple y una tipografía legible. El sitio web será responsive y se adaptará a cualquier dispositivo. </p>
-            <div class="badges-contenedor">
-              <span class="badge text-bg-primary">HTML</span>
-              <span class="badge text-bg-primary">CSS</span>
-              <span class="badge text-bg-primary">JavaScript</span>
-              <span class="badge text-bg-primary">React</span>
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+            <p class="hero-greeting" data-aos="fade-down">whoami</p>
+            <h1 data-aos="fade-up" data-aos-delay="100">
+                Hola, soy <span class="highlight">Jesús Luna</span>
+            </h1>
+            <p class="hero-tagline" data-aos="fade-up" data-aos-delay="300">
+                Estudiante de Ingeniería en Sistemas Computacionales. 
+                Del miedo a la tecnología en 2010, a construir el futuro hoy.
+            </p>
+            <div class="hero-buttons" data-aos="fade-up" data-aos-delay="500">
+                <a href="#projects" class="btn btn-primary-custom">Ver Proyectos</a>
+                <a href="#about" class="btn btn-outline-custom">Conóceme</a>
             </div>
-          </div>
-          <!-- Articulos -->
-          <div class="columna col-12 col-md-4">
-            <i class="bi bi-laptop"></i>
-            <p class="experiencia-titulo">Artículos|Beta</p>
-            <p>Concer las ultimas noticias de tecnologías. </p>
-            <div class="badges-contenedor">
-              <span class="badge text-bg-primary">Escribir</span>
-              <span class="badge text-bg-primary">Editar</span>
-              <span class="badge text-bg-primary">Blogs</span>
-            </div>
-          </div>
-          <!-- Estudiante -->
-          <div class="columna col-12 col-md-4">
-            <i class="bi bi-laptop"></i>
-            <p class="experiencia-titulo">Estudiante</p>
-            <p>Contribuir con proyectos de código. </p>
-            <div class="badges-contenedor">
-              <span class="badge text-bg-primary">Git Hub</span>
-              <span class="badge text-bg-primary">Desarrollo Web</span>
-              <span class="badge text-bg-primary">Python</span>
-            </div>
-          </div>
         </div>
-      </div>
+        <a href="#about" class="scroll-down">
+            <i class="bi bi-chevron-double-down"></i>
+        </a>
     </section>
 
-    <!-- Proyectos -->
-    <section id="proyectos" class="proyectos-recientes seccion-clara d-flex flex-column">
-      <h2 class="seccion-titulo texto-negro">Mis proyectos recientes</h2>
-      <h3 class="seccion-descripcion">Estos son algunos proyectos que he creado recientemente...</h3>
-      <!-- Galeria de Proyectos -->
-      <div class="container text-center proyectos-contenedor">
-        <div class="row">
-          <!-- Proyecto 1 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="proyecto">
-              <img src="proyecto1.png" alt="Proyecto 1">
-              <div class="overlay">
-                <p>Proyecto 1</p>
-                <div class="iconos-contenedor">
-                  <a href="https://github.com/jchmx" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-github"></i>
-                  </a>
-                  <a href="" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-laptop"></i>
-                  </a>
-                </div>
-              </div>
+    <!-- ===== ABOUT ===== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Sobre mí</span>
+                <h2 class="section-title">console.log("Hola mundo")</h2>
             </div>
-          </div>
-          <!-- Proyecto 2 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="proyecto">
-              <img src="proyecto2.png" alt="Proyecto 1">
-              <div class="overlay">
-                <p>Proyecto 2</p>
-                <div class="iconos-contenedor">
-                  <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-github"></i>
-                  </a>
-                  <a href="" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-laptop"></i>
-                  </a>
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4" data-aos="fade-right">
+                    <p class="about-text mb-3">
+                        Bienvenidos a este espacio digital. Soy <strong>Jesús Luna</strong>, estudiante de 
+                        <span class="accent">Ingeniería en Sistemas Computacionales</span>. Mi viaje en esta 
+                        apasionante profesión comenzó en <strong>2010</strong> en el IPC (Instituto Profesional 
+                        de Computación) en Huauchinango, Puebla.
+                    </p>
+                    <p class="about-text mb-3">
+                        En aquellos inicios, confieso que sentía cierta aprensión hacia la tecnología, 
+                        pero fue precisamente ahí donde descubrí sistemas operativos como 
+                        <strong>Windows Vista y 7</strong>, que marcaron mi primer contacto formal con las TIC's.
+                    </p>
+                    <p class="about-text mb-3">
+                        Tras una década de exploración y aprendizaje autodidacta, en <strong>2020</strong> 
+                        experimenté un redescubrimiento profesional. Fue entonces cuando retomé con mayor 
+                        determinación mi formación en el ámbito del desarrollo tecnológico, reconectando 
+                        con esa fascinación inicial que hoy impulsa mi <span class="accent">crecimiento constante</span> 
+                        en esta industria.
+                    </p>
                 </div>
-              </div>
-            </div>
-          </div>
-          <!-- Proyecto 3 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="proyecto">
-              <img src="proyecto3.png" alt="Proyecto 1">
-              <div class="overlay">
-                <p>Proyecto 3</p>
-                <div class="iconos-contenedor">
-                  <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-github"></i>
-                  </a>
-                  <a href="" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-laptop"></i>
-                  </a>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="about-terminal">
+                        <div class="terminal-header">
+                            <span class="terminal-dot red"></span>
+                            <span class="terminal-dot yellow"></span>
+                            <span class="terminal-dot green"></span>
+                            <span class="terminal-title">jesus@luna: ~</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="terminal-line"><span class="comment"># Mi viaje en 3 actos 📜</span></div>
+                            <div class="terminal-line"><br></div>
+                            <div class="terminal-line"><span class="keyword">$ </span>echo "Inicios con Windows 🪟"</div>
+                            <div class="terminal-line" style="padding-left: 1rem;"><span class="string">"¡Temblando de miedo ante la pantalla azul!" 😅</span></div>
+                            <div class="terminal-line"><br></div>
+                            <div class="terminal-line"><span class="keyword">$ </span>sudo apt-get install ubuntu 🐧❤️</div>
+                            <div class="terminal-line" style="padding-left: 1rem;"><span class="string">Ubuntu → +Ligero, +Intuitivo, +Personalizable ✨</span></div>
+                            <div class="terminal-line"><br></div>
+                            <div class="terminal-line"><span class="comment"># Mi stack favorito 💖</span></div>
+                            <div class="terminal-line"><span class="keyword">$ </span>code .        <span class="comment"># VS Code / Zed 🔪</span></div>
+                            <div class="terminal-line"><span class="keyword">$ </span>git push     <span class="comment"># GitHub 🏆</span></div>
+                            <div class="terminal-line"><span class="keyword">$ </span>npm start    <span class="comment"># Node.js + JS 🦸</span></div>
+                            <div class="terminal-line"><span class="keyword">$ </span>python3 IA.py <span class="comment"># Python 🧙‍♂️</span></div>
+                            <div class="terminal-line"><span class="keyword">$ </span>cargo build  <span class="comment"># Rust 😏</span></div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-          <!-- Proyecto 4 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="proyecto">
-              <img src="proyecto4.png" alt="Proyecto 1">
-              <div class="overlay">
-                <p>Proyecto 4</p>
-                <div class="iconos-contenedor">
-                  <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-github"></i>
-                  </a>
-                  <a href="" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-laptop"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Proyecto 5 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="proyecto">
-              <img src="proyecto5.png" alt="Proyecto 1">
-              <div class="overlay">
-                <p>Proyecto 5</p>
-                <div class="iconos-contenedor">
-                  <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-github"></i>
-                  </a>
-                  <a href="" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-laptop"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- Proyecto 6 -->
-          <div class="col-12 col-md-6 col-lg-4">
-            <div class="proyecto">
-              <img src="proyecto6.png" alt="Proyecto 1">
-              <div class="overlay">
-                <p>Proyecto 6</p>
-                <div class="iconos-contenedor">
-                  <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-github"></i>
-                  </a>
-                  <a href="" target="_blank" rel="noopener noreferrer">
-                    <i class="bi bi-laptop"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
-      <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-        <button type="button" class="btn btn-info">
-          Ver más proyectos
-          <i class="bi bi-arrow-right-circle-fill"></i>
-        </button>
-      </a>
     </section>
-    <a></a>
 
-    <!-- Articulos -->
-    <section class="articulos justify-content-start">
-      <h2 class="seccion-titulo texto-negro">Artículos</h2>
-      <div class="card">
-        <div class="card-header">
-          Más recientes
+    <!-- ===== JOURNEY / TIMELINE ===== -->
+    <section id="journey">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Mi Viaje</span>
+                <h2 class="section-title">3 Actos, Una Historia</h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">ACTO 01 — 2010</span>
+                        <h4>🪟 Inicios con Windows</h4>
+                        <p>"¡Temblando de miedo ante la pantalla azul!" 😅</p>
+                        <p>Comencé con Windows Vista/7, esos SO que nos enseñaron a todos a odiar las actualizaciones forzosas. ¡Pero fueron mi primer contacto con el mundo digital!</p>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">ACTO 02 — 2020</span>
+                        <h4>🐧❤️ El flechazo con Linux</h4>
+                        <p>Descubrí que Ubuntu (¡esa distro mágica! ✨) es:</p>
+                        <div class="mt-2">
+                            <span class="timeline-feature">✅ Más ligero</span>
+                            <span class="timeline-feature">✅ Más intuitivo</span>
+                            <span class="timeline-feature">✅ Personalizable</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-year">ACTO 03 — PRESENTE</span>
+                        <h4>🛠️ Herramientas de cada día</h4>
+                        <p>Mi stack favorito con el que construyo el futuro día a día:</p>
+                        <div class="mt-2">
+                            <span class="timeline-feature">VS Code / Zed</span>
+                            <span class="timeline-feature">Git + GitHub</span>
+                            <span class="timeline-feature">Node.js</span>
+                            <span class="timeline-feature">Python</span>
+                            <span class="timeline-feature">Rust</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <ul class="list-group list-group-flush">
-          <a href="" target="_blank" rel="noopener noreferrer">
-            <li class="list-group-item">
-              El decorador @property en Python - cómo usarlo, ventajas y sintaxis
-            </li>
-          </a>
-          <a href="" target="_blank" rel="noopener noreferrer">
-            <li class="list-group-item">
-              Python tutorial ciclos while - while True ejemplos de sintaxis y ciclos infinitos
-            </li>
-          </a>
-          <a href="" target="_blank" rel="noopener noreferrer">
-            <li class="list-group-item">
-              Python leer archivo JSON - cómo cargar JSON desde un archivo y procesar dumps
-            </li>
-          </a>
-          <a href="" target="_blank" rel="noopener noreferrer">
-            <li class="list-group-item">
-              Python cómo escribir en un archivo - abrir, leer, escribir y otras funciones de archivos explicadas
-            </li>
-          </a>
-          <a href="" target="_blank" rel="noopener noreferrer">
-            <li class="list-group-item">
-              ¿Para qué se usa Python? 10+ usos del lenguaje de programación Python
-            </li>
-          </a>
-        </ul>
-      </div>
-      <a href="https://github.com/jchmx" target="_blank" rel="noopener noreferrer">
-        <button type="button" class="btn btn-info">
-          Ver más artículos
-          <i class="bi bi-arrow-right-circle-fill"></i>
-        </button>
-      </a>
     </section>
 
-    <!-- Contacto -->
-    <section id="contacto" class="contacto seccion-oscura">
-      <div class="container">
-        <div class="container text-center rectangulo d-flex justify-content-evenly">
-          <div class="row">
-            <div class="col-12 col-md-4 seccion-titulo">
-              ¡Hablemos!
+    <!-- ===== STACK ===== -->
+    <section class="stack-section" id="stack">
+        <div class="stack-orbit-field"></div>
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Stack Tecnológico</span>
+                <h2 class="section-title">Mi Universo Tecnológico 🌌</h2>
+                <p style="color: var(--text-secondary); max-width: 560px; margin: 0 auto;">Cada lenguaje y herramienta es un planeta distinto en la misma órbita: construir cosas que funcionen (casi) a la primera.</p>
             </div>
-            <div class="col-12 col-md-4 descripcion">
-              Contáctame para iniciar tu proyecto de desarrollo web y haré que tu visión se vuelva realidad.
+            <div class="stack-grid" data-aos="fade-up" data-aos-delay="100">
+                <div class="stack-item">
+                    <span class="stack-icon">📝</span>
+                    <h5>VS Code / Zed</h5>
+                    <p>Editores navaja suiza 🔪</p>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-icon">🏆</span>
+                    <h5>Git + GitHub</h5>
+                    <p>Mi álbum de logros</p>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-icon">🦸</span>
+                    <h5>Node.js + JS</h5>
+                    <p>Dúo dinámico</p>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-icon">🧙‍♂️</span>
+                    <h5>Python</h5>
+                    <p>Varita mágica automática</p>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-icon">⚙️</span>
+                    <h5>Rust</h5>
+                    <p>Nuevo crush tecnológico 😏</p>
+                </div>
+                <div class="stack-item">
+                    <span class="stack-icon">🐧</span>
+                    <h5>Ubuntu</h5>
+                    <p>Mi SO favorito ❤️</p>
+                </div>
             </div>
-            <div class="col-12 col-md-4">
-              <a href="hola@shcy.site">
-                <button type="button">  
-                  Contacto
-                  <i class="bi bi-envelope-check-fill"></i>
-                </button>
-              </a>
-            </div>
-          </div>
         </div>
-      </div>
     </section>
-    
 
-    <!-- Pie de pagina (footer) -->
-    <footer class="seccion-oscura d-flex flex-column align-items-center justify-content-center"> 
-      <img class="footer-logo" src="icono.png" alt="Logo del portafolio">
-      <p class="footer-texto text-center">Aprendo y creo todos los días.<br>Creemos un proyecto juntos.</p>
-      <div class="iconos-redes-sociales d-flex flex-wrap align-items-center justify-content-center">
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-twitter"></i>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-github"></i>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-linkedin"></i>
-        </a>
-        <a href="" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-instagram"></i>
-        </a>
-        <a href="hola@shcy.com" target="_blank" rel="noopener noreferrer">
-          <i class="bi bi-envelope"></i>
-        </a>
-      </div>
-      <div class="derechos-de-autor">Creado por Shcy Software (2024-2025) &#169;</div>
+    <!-- ===== PROJECTS ===== -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Mis proyectos en desarrollo</span>
+                <h2 class="section-title">Construyendo el Futuro 🚀</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="project-card">
+                        <div class="project-banner xoloai">
+                            <i class="bi bi-robot project-banner-icon"></i>
+                        </div>
+                        <div class="project-body">
+                            <span class="project-badge">AI · WEB · AUTOMATIZATION</span>
+                            <h3>XoloAI</h3>
+                            <p>Antes conocida como Cactuscoin: Desarrollo impulsado por inteligencia artificial. XoloAI representa la evolución de la tecnología creativa, fusionando el poder de la IA con soluciones web y aplicaciones innovadoras. Especializada en automatización, diseño inteligente y experiencias digitales únicas, llevando el desarrollo a un nivel superior.</p>
+                            <a href="https://jchmx.github.io/xoloai/" target="_blank" class="project-link">
+                                Explorar proyecto <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="project-card">
+                        <div class="project-banner zyntech">
+                            <i class="bi bi-code-slash project-banner-icon"></i>
+                        </div>
+                        <div class="project-body">
+                            <span class="project-badge">WEB · DESIGN · FUTURISTIC</span>
+                            <h3>codevoid</h3>
+                            <p>Desarrollo de páginas con un enfoque moderno y experiencias visuales impactantes. Zyntech es sinónimo de vanguardia y estilo en el mundo digital. Con un enfoque en interfaces dinámicas, diseños futuristas y una experiencia de usuario altamente visual, transforma ideas en plataformas web que no solo funcionan, sino que también cautivan.</p>
+                            <a href="https://jchmx.github.io/schydev/" target="_blank" class="project-link">
+                                Descubrir más <i class="bi bi-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DATE BANNER ===== -->
+    <section class="date-banner" style="padding: 60px 20px;" data-aos="zoom-in">
+        <div class="date-banner-content">
+            <h2>📌 Publicación destacada</h2>
+            <p class="date">Próximamente · 12 de Marzo, 2027</p>
+        </div>
+    </section>
+
+    <!-- ===== BLOG ===== -->
+    <section class="blog-section" id="blog">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Mi Blog</span>
+                <h2 class="section-title">Última entrada</h2>
+            </div>
+            <article class="blog-post" data-aos="fade-up" data-aos-delay="100">
+                <div class="blog-meta">
+                    <span class="blog-date">📅 12 de Marzo, 2027</span>
+                    <span class="blog-tag">Desarrollo</span>
+                    <span class="blog-tag">IA</span>
+                    <span class="blog-tag">Web</span>
+                </div>
+                <h2>Mis Proyectos en Desarrollo</h2>
+                <p>
+                    El camino del desarrollo tecnológico está lleno de retos y descubrimientos. 
+                    Hoy quiero compartir los proyectos en los que estoy trabajando activamente, 
+                    cada uno con un propósito único pero con una visión en común: 
+                    <strong style="color: var(--text-primary);">crear tecnología que anticipe las necesidades del usuario</strong>.
+                </p>
+                <p>
+                    <strong style="color: var(--accent);">XoloAI</strong> — Antes conocida como Cactuscoin, 
+                    es un proyecto de desarrollo impulsado por inteligencia artificial. Representa la evolución 
+                    de la tecnología creativa, fusionando el poder de la IA con soluciones web y aplicaciones innovadoras. 
+                    Especializada en automatización, diseño inteligente y experiencias digitales únicas, 
+                    esta marca lleva el desarrollo a un nivel superior, optimizando procesos y creando 
+                    productos que anticipan las necesidades del usuario.
+                </p>
+                <p>
+                    <strong style="color: var(--accent);">codevoid</strong> — Desarrollo de páginas con un enfoque 
+                    moderno y experiencias visuales impactantes. Zyntech es sinónimo de vanguardia y estilo 
+                    en el mundo digital. Con un enfoque en interfaces dinámicas, diseños futuristas y una 
+                    experiencia de usuario altamente visual, esta marca transforma ideas en plataformas web 
+                    y aplicaciones que no solo funcionan, sino que también cautivan.
+                </p>
+                <div class="blog-code-block">
+                    <span class="comment"># Explora los proyectos 👇</span><br>
+                    <span class="cmd">$ </span>git clone <span class="flag">https://jchmx.github.io/xoloai/</span> <span class="note"># XoloAI 🤖</span><br>
+                    <span class="cmd">$ </span>git clone <span class="flag">https://jchmx.github.io/schydev/</span> <span class="note"># Zyntech ⚡</span><br>
+                    <span class="cmd">$ </span>echo <span class="flag">"¡El futuro es ahora! 🚀"</span>
+                </div>
+                <h3 style="font-size: 1.3rem; margin: 2rem 0 1rem; color: var(--text-primary);">Características destacadas</h3>
+                <ul class="blog-list">
+                    <li>XoloAI: Automatización inteligente con IA aplicada al desarrollo web</li>
+                    <li>XoloAI: Diseño inteligente que anticipa necesidades del usuario</li>
+                    <li>Zyntech: Interfaces dinámicas con diseños futuristas</li>
+                    <li>Zyntech: Experiencias de usuario altamente visuales y memorables</li>
+                    <li>Ambos: Optimización de procesos y productos digitales únicos</li>
+                </ul>
+            </article>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT ===== -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <span class="section-tag">Contacto</span>
+                <h2 class="section-title">¿Construimos algo? 🚀</h2>
+            </div>
+            <div class="contact-card" data-aos="zoom-in">
+                <h3>Hablemos</h3>
+                <p>Proyectos, colaboraciones o simplemente para saludar — mi correo siempre está abierto.</p>
+                <div class="contact-email-row">
+                    <i class="bi bi-envelope"></i>
+                    <span id="email-text">jsluna1@proton.me</span>
+                    <button class="copy-email-btn" id="copy-email-btn" type="button">Copiar</button>
+                </div>
+                <div class="contact-links">
+                    <a href="mailto:jsluna1@proton.me" class="btn btn-primary-custom">Enviar correo</a>
+                    <a href="https://github.com/jchmx" target="_blank" class="btn btn-outline-custom">Ver GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-logo">jesus_luna<span class="accent">()</span></div>
+            <div class="footer-social">
+                <a href="https://github.com/jchmx" target="_blank" aria-label="GitHub"><i class="bi bi-github"></i></a>
+                <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                <a href="mailto:jsluna1@proton.me" aria-label="Email"><i class="bi bi-envelope"></i></a>
+                <a href="#" aria-label="Blog"><i class="bi bi-journal-code"></i></a>
+            </div>
+            <p class="footer-copy">&copy; 2026 Jesús Luna · Hecho con 🧡 desde Pachuca,Hidalgo</p>
+        </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-  </body>
+    <!-- ===== SCRIPTS ===== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 80
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar-custom');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Terminal typing effect on hero
+        const greeting = document.querySelector('.hero-greeting');
+        const text = greeting.textContent;
+        greeting.textContent = '';
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                greeting.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 80);
+            }
+        };
+        setTimeout(typeWriter, 500);
+
+        // ============ UNIVERSE STARFIELD ============
+        (() => {
+            const canvas = document.getElementById('stars-canvas');
+            const ctx = canvas.getContext('2d');
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            let stars = [];
+            let w, h;
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+                const count = Math.min(220, Math.floor((w * h) / 9000));
+                stars = Array.from({ length: count }, () => ({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    r: Math.random() * 1.3 + 0.3,
+                    baseAlpha: Math.random() * 0.6 + 0.2,
+                    tw: Math.random() * Math.PI * 2,
+                    speed: Math.random() * 0.15 + 0.03
+                }));
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                for (const s of stars) {
+                    s.tw += s.speed * 0.05;
+                    const alpha = s.baseAlpha + Math.sin(s.tw) * 0.25;
+                    ctx.beginPath();
+                    ctx.fillStyle = `rgba(255,255,255,${Math.max(0, Math.min(1, alpha))})`;
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                if (!reduceMotion) requestAnimationFrame(draw);
+            }
+
+            resize();
+            draw();
+            window.addEventListener('resize', resize);
+
+            // Occasional shooting stars
+            if (!reduceMotion) {
+                function spawnShootingStar() {
+                    const el = document.createElement('div');
+                    el.className = 'shooting-star';
+                    const startX = Math.random() * window.innerWidth * 0.6;
+                    const startY = Math.random() * window.innerHeight * 0.3;
+                    const dist = 260 + Math.random() * 220;
+                    el.style.left = startX + 'px';
+                    el.style.top = startY + 'px';
+                    el.style.setProperty('--sx', dist + 'px');
+                    el.style.setProperty('--sy', (dist * 0.45) + 'px');
+                    el.style.animation = `shoot ${1.1 + Math.random() * 0.6}s ease-out forwards`;
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 2000);
+                    setTimeout(spawnShootingStar, 4000 + Math.random() * 6000);
+                }
+                setTimeout(spawnShootingStar, 2000);
+            }
+        })();
+
+        // ============ COPY EMAIL ============
+        const copyBtn = document.getElementById('copy-email-btn');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const email = document.getElementById('email-text').textContent.trim();
+                navigator.clipboard.writeText(email).then(() => {
+                    copyBtn.textContent = '¡Copiado! ✓';
+                    copyBtn.classList.add('copied');
+                    setTimeout(() => {
+                        copyBtn.textContent = 'Copiar';
+                        copyBtn.classList.remove('copied');
+                    }, 2000);
+                });
+            });
+        }
+    </script>
+</body>
 </html>
